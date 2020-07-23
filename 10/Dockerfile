@@ -75,14 +75,19 @@ ENV PG_VERSION 10.3
 
 
 # [START] Custom Agensgraph installation
+ADD build-agensgraph.sh /opt/
 RUN apt update && \
 	apt upgrade -y && \
 	apt install -y build-essential libreadline-dev zlib1g-dev flex bison \
 					libxml2-dev libxslt1-dev libssl-dev libxml2-utils \
 					wget xsltproc && \
-	apt clean
-ADD build-agensgraph.sh /opt/
-RUN /opt/build-agensgraph.sh
+	apt clean && \
+	rm -rf /var/lib/apt/lists/* && \
+	/opt/build-agensgraph.sh && \
+	apt remove -y build-essential libreadline-dev zlib1g-dev flex bison \
+					libxml2-dev libxslt1-dev libssl-dev libxml2-utils \
+					wget xsltproc && \
+	apt autoremove -y
 # [END] Custom Agensgraph installation
 
 
