@@ -23,6 +23,7 @@ docker run \
 	--name=myagens \
 	--env POSTGRES_PASSWORD=myprecious \
 	--env PGDATA=/var/lib/postgresql/data/pgdata \
+	--env GRAPH_DB=agens \
 	--volume $(pwd)/agens-data:/var/lib/postgresql/data \
 	--shm-size=256MB \
 	--publish 15432:5432 \
@@ -30,10 +31,14 @@ docker run \
 	turicas/agensgraph:2.1.3
 ```
 
+> Note: `agens` is the default graph name and you don't need to pass `GRAPH_DB`
+> if you don't want to change it.
+
 You can then connect to the server from the host machine:
 
 ```shell
 psql postgres://postgres:myprecious@localhost:15432/postgres
+# then: SET graph_path = agens; ...
 ```
 
 Check also the [official PostgreSQL Docker
