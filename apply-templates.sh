@@ -34,7 +34,7 @@ for version; do
 
 	major="$(jq -r '.[env.version].major' versions.json)"
 
-	variants="$(jq -r '.[env.version].debianSuites + ["alpine"] | map(@sh) | join(" ")' versions.json)"
+	variants="$(jq -r '.[env.version].debianSuites | map(@sh) | join(" ")' versions.json)"
 	eval "variants=( $variants )"
 
 	rm -rf "$version"
