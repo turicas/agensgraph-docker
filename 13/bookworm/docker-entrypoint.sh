@@ -218,6 +218,13 @@ docker_setup_db() {
 	fi
 }
 
+# create initial graph inside default database
+# uses environment variables for input: GRAPH_DB
+docker_setup_graph() {
+	export GRAPH_DB=${GRAPH_DB:-agens}
+	echo "CREATE GRAPH ${GRAPH_DB};" | docker_process_sql --dbname "$POSTGRES_DB"
+}
+
 # Loads various settings that are used elsewhere in the script
 # This should be called before any other functions
 docker_setup_env() {
@@ -332,6 +339,7 @@ _main() {
 			docker_temp_server_start "$@"
 
 			docker_setup_db
+			docker_setup_graph
 			docker_process_init_files /docker-entrypoint-initdb.d/*
 
 			docker_temp_server_stop
