@@ -61,6 +61,6 @@ for version; do
 			gawk -f "$jqt" "$template"
 		} > "$dir/Dockerfile"
 
-		cp -a docker-entrypoint.sh docker-ensure-initdb.sh "$dir/"
+		cp -a build-agensgraph.sh docker-entrypoint.sh docker-ensure-initdb.sh "$dir/"
 	done
 done
